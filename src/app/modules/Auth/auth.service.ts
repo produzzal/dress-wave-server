@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import { TUser } from '../User/user.interface';
-import { User } from '../User/user.model';
 import { TLoginUser } from './auth.interface';
 import jwt from 'jsonwebtoken';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import bcrypt from 'bcrypt';
+import { User } from '../User/user.model';
 
 // Signup functionality remains the same
 const signup = async (payload: TUser): Promise<any> => {
@@ -39,22 +40,23 @@ const login = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Password not matched');
   }
 
+  if (!config.jwt_access_secret || !config.jwt_refresh_secret) {
+    throw new Error(
+      'JWT secrets are not defined properly in the environment variables!',
+    );
+  }
+
   const jwtPayload = {
     id: user._id,
     name: user.name,
     email: user.email,
     role: user.role,
   };
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: config.jwt_access_expires_in,
-  });
+  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string);
 
   const refreshToken = jwt.sign(
     jwtPayload,
-    config.jwt_access_secret as string,
-    {
-      expiresIn: config.jwt_access_expires_in,
-    },
+    config.jwt_refresh_secret as string,
   );
 
   return {
