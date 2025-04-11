@@ -8,8 +8,4 @@ export type TUser = {
   address: string;
   role: keyof typeof USER_ROLE;
   profilePicture: string;
-  createdAt: string;
-  updatedAt: string;
-  lastLogin: string;
-  isActive: boolean;
 };

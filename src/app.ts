@@ -10,12 +10,14 @@ const app: Application = express();
 //parsers
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-  }),
-);
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://dresswave.onrender.com'], // Allow both localhost and your deployed frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 //applications routes
 app.use('/api', router);
