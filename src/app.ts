@@ -10,11 +10,22 @@ const app: Application = express();
 //parsers
 
 app.use(express.json());
+const allowedOrigins = [
+  'https://dresswave.onrender.com',
+  'http://localhost:3000',
+];
+
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://dresswave.onrender.com'], // Allow both localhost and your deployed frontend
+  origin: (origin: string | undefined, callback: any) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
 };
 
 app.use(cors(corsOptions));
