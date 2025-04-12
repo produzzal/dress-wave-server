@@ -12,6 +12,24 @@ const createProductToDB = async (payload: TProduct) => {
   return result;
 };
 
+const getAllProductFromDB = async () => {
+  const result = await Product.find();
+  if (result.length < 1) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Products Found');
+  }
+  return result;
+};
+
+const getSingleProductFromDB = async (productId: string) => {
+  const result = await Product.findById({ _id: productId });
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Product Found');
+  }
+  return result;
+};
+
 export const ProductServices = {
   createProductToDB,
+  getAllProductFromDB,
+  getSingleProductFromDB,
 };
