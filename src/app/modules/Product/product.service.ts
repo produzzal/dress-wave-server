@@ -40,9 +40,18 @@ const UpdateProductFromDB = async (productId: string, productData) => {
   return result;
 };
 
+const deleteProductFromDB = async (productId: string) => {
+  const result = await Product.findByIdAndDelete(productId);
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Product Found');
+  }
+  return result;
+};
+
 export const ProductServices = {
   createProductToDB,
   getAllProductFromDB,
   getSingleProductFromDB,
   UpdateProductFromDB,
+  deleteProductFromDB,
 };
