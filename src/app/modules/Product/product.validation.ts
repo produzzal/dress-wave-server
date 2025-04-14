@@ -25,7 +25,7 @@ export const productUpdateSchema = z.object({
   body: z.object({
     productName: z.string().min(1, 'Product name is required').optional(),
     description: z.string().min(1, 'Description is required').optional(),
-    price: z.number().min(0, 'Price must be a positive number'),
+    price: z.number().min(0, 'Price must be a positive number').optional(),
     discountPrice: z
       .number()
       .min(0, 'Discount price must be a positive number')

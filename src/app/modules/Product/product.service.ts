@@ -28,8 +28,21 @@ const getSingleProductFromDB = async (productId: string) => {
   return result;
 };
 
+const UpdateProductFromDB = async (productId: string, productData) => {
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Product Found');
+  }
+  const result = await Product.findByIdAndUpdate(productId, productData, {
+    new: true,
+  });
+
+  return result;
+};
+
 export const ProductServices = {
   createProductToDB,
   getAllProductFromDB,
   getSingleProductFromDB,
+  UpdateProductFromDB,
 };
