@@ -11,6 +11,8 @@ const productSchema = new Schema<TProduct>(
     brand: { type: String, required: true },
     category: { type: String, required: true },
     subcategory: { type: String, required: true },
+    color: { type: [String], required: true },
+    size: { type: [String], required: true },
     stockAvailability: { type: Number, required: true },
     images: { type: [String], required: true },
     thumbnail: { type: String, required: true },

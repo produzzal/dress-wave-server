@@ -13,6 +13,8 @@ export const productSchema = z.object({
     brand: z.string().min(1, 'Brand is required'),
     category: z.string().min(1, 'Category is required'),
     subcategory: z.string().min(1, 'Subcategory is required'),
+    color: z.array(z.string()).min(1, 'At least one color is required'),
+    size: z.array(z.string()).min(1, 'At least one size is required'),
     stockAvailability: z
       .number()
       .min(0, 'Stock availability must be a positive number'),
@@ -34,6 +36,14 @@ export const productUpdateSchema = z.object({
     brand: z.string().min(1, 'Brand is required').optional(),
     category: z.string().min(1, 'Category is required').optional(),
     subcategory: z.string().min(1, 'Subcategory is required').optional(),
+    color: z
+      .array(z.string())
+      .min(1, 'At least one color is required')
+      .optional(),
+    size: z
+      .array(z.string())
+      .min(1, 'At least one size is required')
+      .optional(),
     stockAvailability: z
       .number()
       .min(0, 'Stock availability must be a positive number')
